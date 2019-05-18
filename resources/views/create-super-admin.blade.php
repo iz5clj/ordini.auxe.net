@@ -1,4 +1,4 @@
-@extends('layouts.no-menu-app')
+@extends('layouts.main-no-menu')
 
 @section('content')
 <div class="container">

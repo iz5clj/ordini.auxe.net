@@ -6,3 +6,9 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+dl { width: 380px }
+dt { float: left; width: 200px; overflow: hidden; white-space: nowrap }
+dd { float: left; width: 175px; overflow: hidden; margin-left: 3px; }
+
+dt:after { content: " .................................................................................. " }

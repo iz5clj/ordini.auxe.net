@@ -21,8 +21,13 @@ Route::post('install',[
 ]);
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
+
+Route::get('info',[
+    'as'   => 'info',
+    'uses' => 'InfoController@index'
+]);
 
 Auth::routes();
 
