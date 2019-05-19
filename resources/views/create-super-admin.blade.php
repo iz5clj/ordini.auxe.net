@@ -1,4 +1,4 @@
-@extends('layouts.main-no-menu')
+@extends('layouts.main', ['viewMenu' => false])
 
 @section('content')
 <div class="container">

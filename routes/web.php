@@ -1,4 +1,5 @@
 <?php
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,15 +21,14 @@ Route::post('install',[
     'uses' => 'SuperAdminController@saveData',
 ]);
 
-Route::get('/', function () {
-    return view('home');
+Route::middleware(['auth'])->group(function(){
+
+    Route::get('/', 'HomeController@index')->name('home');
+
+    Route::get('utenti', 'UserController@index')->name('users');
+
+    Route::get('info', 'InfoController@index')->name('info');
+
 });
 
-Route::get('info',[
-    'as'   => 'info',
-    'uses' => 'InfoController@index'
-]);
-
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');

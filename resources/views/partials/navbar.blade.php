@@ -11,6 +11,11 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
+                {{-- Users --}}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('users') }}">{{ __('Utenti') }}</a>
+                </li>
+                {{-- System Info --}}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('info') }}">{{ __('Sys Info') }}</a>
                 </li>
