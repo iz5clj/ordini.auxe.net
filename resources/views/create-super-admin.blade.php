@@ -1,4 +1,7 @@
-@extends('layouts.main', ['viewMenu' => false])
+@extends('layouts.main', [
+    'viewMenu' => false,
+    'viewCard' => false
+])
 
 @section('content')
 <div class="container">

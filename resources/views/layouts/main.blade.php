@@ -13,7 +13,7 @@
     <title>{{ config('app.name', "1865 Residenza d'epoca") }}</title>
 
     @include('partials.css')
-    
+
 </head>
 
 <body>
@@ -21,7 +21,11 @@
 
         @includeWhen( $viewMenu, 'partials.navbar')
 
-        @includeWhen( $viewCard, 'partials.mainCard')
+        @if($viewCard)
+        @include('partials.mainCard')
+        @else
+        @include('partials.mainNoCard')
+        @endif
         
     </div>
 

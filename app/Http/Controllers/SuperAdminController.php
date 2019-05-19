@@ -36,6 +36,6 @@ class SuperAdmincontroller extends Controller
         // login new created user
         Auth::login($user, TRUE);
 
-        return redirect('home');
+        return redirect(route('home'));
     }
 }

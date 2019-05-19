@@ -21,7 +21,7 @@ Route::post('install',[
     'uses' => 'SuperAdminController@saveData',
 ]);
 
-// Route::middleware(['auth'])->group(function(){
+Route::middleware(['auth'])->group(function(){
 
     Route::get('/', 'HomeController@index')->name('home');
 
@@ -29,6 +29,6 @@ Route::post('install',[
 
     Route::get('info', 'InfoController@index')->name('info');
 
-// });
+});
 
 Auth::routes();

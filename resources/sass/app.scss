@@ -12,3 +12,22 @@ dt { float: left; width: 200px; overflow: hidden; white-space: nowrap }
 dd { float: left; width: 175px; overflow: hidden; margin-left: 3px; }
 
 dt:after { content: " .................................................................................. " }
+
+// html, body {
+//     height: 100vh;
+//     margin: 0;
+// }
+
+.full-height {
+    height: 100vh;
+}
+
+.flex-center {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.position-ref {
+    position: relative;
+}
