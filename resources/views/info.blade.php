@@ -1,8 +1,11 @@
 @extends('layouts.main', [
     'viewMenu'  => true,
-    'viewCard'  => true,
-    'title'     => 'System Info'
+    'viewCard'  => true
 ])
+
+@section('card-header')
+Informazioni sul Sistema
+@endsection
 
 
 @section('content')

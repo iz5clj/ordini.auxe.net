@@ -1,10 +1,12 @@
 @extends('layouts.main', [
     'viewMenu'  => true,
-    'viewCard'  => true,
-    'title'     => 'Utenti',
-    'titleSide' => 'Aggiungere Utente'
-
+    'viewCard'  => true
 ])
+
+@section('card-header')
+Utenti
+<a class="ml-1 btn btn-outline-primary" href="{{ route('userCreateForm') }}">Aggiungere un Utente</a>
+@endsection
 
 @section('content')
 <table class="table table-borderless table-sm">
@@ -20,7 +22,7 @@
         <thead>
             <tr class="table-info">
                 <td>{{ $user->id }}</td>
-                <td>{{ $user->name }}</td>
+                <td><a href="{{ route('userModify', $user->id) }}">{{ $user->name }}</a></td>
                 <td>{{ $user->email}}</td>
             </tr>
         </thead>

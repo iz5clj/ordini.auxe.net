@@ -25,7 +25,10 @@ Route::middleware(['auth'])->group(function(){
 
     Route::get('/', 'HomeController@index')->name('home');
 
-    Route::get('utenti', 'UserController@index')->name('users');
+    Route::get('users', 'UserController@index')->name('users');
+    Route::get('/user/create', 'UserController@create')->name('userCreateForm');
+    Route::post('/user/store', 'UserController@store')->name('userStore');
+    Route::get('/user/{id}', 'UserController@modify')->name('userModify');
 
     Route::get('info', 'InfoController@index')->name('info');
 

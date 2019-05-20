@@ -7,11 +7,27 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
-dl { width: 380px }
-dt { float: left; width: 200px; overflow: hidden; white-space: nowrap }
-dd { float: left; width: 175px; overflow: hidden; margin-left: 3px; }
+dl {
+    width: 380px
+}
 
-dt:after { content: " .................................................................................. " }
+dt {
+    float: left;
+    width: 200px;
+    overflow: hidden;
+    white-space: nowrap
+}
+
+dd {
+    float: left;
+    width: 175px;
+    overflow: hidden;
+    margin-left: 3px;
+}
+
+dt:after {
+    content: " .................................................................................. "
+}
 
 // html, body {
 //     height: 100vh;
@@ -31,3 +47,9 @@ dt:after { content: " ..........................................................
 .position-ref {
     position: relative;
 }
+
+.field-required:after {
+    content: " *";
+    color: #ff0000;
+}
+

@@ -1,8 +1,11 @@
 @extends('layouts.main', [
     'viewMenu' => true,
-    'viewCard' => true,
-    'title' => 'Lavagna'
+    'viewCard' => true
 ])
+
+@section('card-header')
+Panello di controllo
+@endsection
 
 @section('content')
 <p>You are logged in!</p>
