@@ -30,7 +30,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -77,10 +77,6 @@ class RegisterController extends Controller
         // Assign Super Admin role the new user.
         $user->assignRole('Super Admin');
 
-        // login new created user
-        Auth::login($user, TRUE);
-
-        return redirect(route('home'));
-        
+        return $user;
     }
 }

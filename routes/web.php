@@ -12,15 +12,6 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::get('install',[
-    'as'   => 'create-super-admin',
-    'uses' => 'SuperAdminController@showForm',
-]);
-Route::post('install',[
-    'as'   => 'save-super-admin-data',
-    'uses' => 'SuperAdminController@saveData',
-]);
-
 Route::middleware(['auth'])->group(function(){
 
     Route::get('/', 'HomeController@index')->name('home');
