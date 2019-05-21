@@ -21,6 +21,11 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/user/store', 'UserController@store')->name('userStore');
     Route::get('/user/{user}', 'UserController@modify')->name('userModify');
 
+    Route::get('roles', 'RoleController@index')->name('roles');
+    Route::get('/role/create', 'RoleController@create')->name('roleCreateForm');
+    Route::post('/role/store', 'RoleController@store')->name('roleStore');
+    Route::get('/role/{role}', 'RoleController@modify')->name('roleModify');
+
     Route::get('info', 'InfoController@index')->name('info');
 
 });

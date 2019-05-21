@@ -15,6 +15,10 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('users') }}">{{ __('Utenti') }}</a>
                 </li>
+                {{-- Roles --}}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('roles') }}">{{ __('Ruoli') }}</a>
+                </li>
                 {{-- System Info --}}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('info') }}">{{ __('Sys Info') }}</a>
