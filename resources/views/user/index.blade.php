@@ -15,6 +15,7 @@ Utenti
             <th scope="col">ID</th>
             <th scope="col">Nome Cognome</th>
             <th scope="col">Email</th>
+            <th scope="col">Ruolo</th>
         </tr>
     </thead>
     <tbody>
@@ -24,11 +25,18 @@ Utenti
                 <td>{{ $user->id }}</td>
                 <td><a href="{{ route('userModify', $user->id) }}">{{ $user->name }}</a></td>
                 <td>{{ $user->email}}</td>
+                <td>
+                    @if(!empty($user->getRoleNames()))
+                        @foreach($user->getRoleNames() as $v)
+                        <label class="badge badge-success">{{ $v }}</label>
+                        @endforeach
+                    @endif
+                </td>
             </tr>
         </thead>
         @empty
         <tr>
-            <td colspan="3"><h3>Non ci sono utenti</h3></td>
+            <td colspan="4"><h3>Non ci sono utenti</h3></td>
         </tr>
         @endforelse
     </tbody>

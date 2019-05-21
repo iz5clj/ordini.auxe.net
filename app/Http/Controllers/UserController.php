@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use Spatie\Permission\Models\Role;
+use Hash;
 
 class UserController extends Controller
 {
@@ -24,10 +26,14 @@ class UserController extends Controller
     public function create()
     {
         $user = new User;
-
+        $roles = Role::pluck('name', 'name')->all();
+        $userRole = '';
+        
         return view('user.createModify')->with([
             'user'   => $user,
-            'action' => 'create'
+            'action' => 'create',
+            'roles'  => $roles,
+            'userRole' => $userRole
         ]);
     }
 
@@ -40,22 +46,21 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email',
+            'name'     => 'required',
+            'email'    => 'required|email|unique:users,email',
             'password' => 'required|same:confirm-password',
-            'roles' => 'required'
+            'role'     => 'required'
         ]);
-
 
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
 
 
         $user = User::create($input);
-        $user->assignRole($request->input('roles'));
+        $user->assignRole($request->input('role'));
 
 
-        return redirect()->route('users.index')
+        return redirect()->route('users')
                         ->with('success','User created successfully');
     }
 
@@ -64,13 +69,16 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function modify($id)
+    public function modify(User $user)
     {
-        $user = User::find($id);
-        
+        $roles    = Role::all()->pluck('name', 'id')->toArray();
+        $userRole = $user->getRoleNames();
+
         return view('user.createModify')->with([
-            'user'   => $user,
-            'action' => 'modify'
+            'user'     => $user,
+            'roles'    => $roles,
+            'userRole' => $userRole,
+            'action'   => 'modify'
         ]);
     }
 }
