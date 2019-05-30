@@ -14,6 +14,14 @@ mix.scripts([
     'node_modules/jquery/dist/jquery.js', // This file is necessary
     'node_modules/popper.js/dist/umd/popper.js', // This file is necessary
     'node_modules/bootstrap/dist/js/bootstrap.js', // this is the full version
+    'node_modules/select2/dist/js/select2.full.js',
+    'resources/js/custom.js'
+], 'public/js/scripts.js');
+
+mix.sass('resources/sass/app.scss', 'public/css');
+
+mix.browserSync('ordini.test');
+
     //'node_modules/jquery.easing/jquery.easing.js',
     //'node_modules/select2/dist/js/select2.full.js',
     //'node_modules/spin.js/spin.js',
@@ -35,11 +43,3 @@ mix.scripts([
 
     // This is from now ui kit pro REQUIRED
     //'resources/assets/js/now-ui-kit.js',
-
-    'resources/js/scripts.js'
-], 'public/js/scripts.js').version();
-
-mix.sass('resources/sass/app.scss', 'public/css');
-
-mix.browserSync('ordini.test');
-

@@ -9,6 +9,10 @@ use Hash;
 
 class UserController extends Controller
 {
+    public function __construct() {
+        $this->middleware(['role:Super Admin']);
+    }
+    
     public function index() {
         
         $users = User::all();
@@ -60,8 +64,9 @@ class UserController extends Controller
         $user->assignRole($request->input('role'));
 
 
-        return redirect()->route('users')
-                        ->with('success','User created successfully');
+        return redirect()
+        ->route('users')
+        ->with('success','Utente creato corretamente.');
     }
 
     /**
@@ -71,8 +76,8 @@ class UserController extends Controller
      */
     public function modify(User $user)
     {
-        $roles    = Role::all()->pluck('name', 'id')->toArray();
-        $userRole = $user->getRoleNames();
+        $roles    = Role::all()->pluck('name', 'name')->toArray();
+        $userRole = $user->getRoleNames()[0]; //get the first element of the array since we assign just 1 role to each user.
 
         return view('user.createModify')->with([
             'user'     => $user,
@@ -80,5 +85,34 @@ class UserController extends Controller
             'userRole' => $userRole,
             'action'   => 'modify'
         ]);
+    }
+
+    public function update(Request $request, User $user)
+    {
+        $input = $request->all();
+
+        if ($request->password) {
+            $this->validate($request, [
+                'password' => 'required|same:confirm-password'
+            ]);
+            $input['password'] = Hash::make($input['password']);
+        }
+        $this->validate($request, [
+            'name'     => 'required',
+            'email'    => 'required|email|unique:users,email,'.$user->id,
+            'role'     => 'required',
+        ]);
+
+        $user->name     = $input['name'];
+        $user->email    = $input['email'];
+
+        $user->save();
+
+        // sync roles.
+        $user->syncRoles($request->input('role'));
+
+        return redirect()
+        ->route('users')
+        ->with('success','Utente modificato.');
     }
 }

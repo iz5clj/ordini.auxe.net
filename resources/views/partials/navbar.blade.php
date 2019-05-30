@@ -11,18 +11,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
             <ul class="navbar-nav mr-auto">
-                {{-- Users --}}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('users') }}">{{ __('Utenti') }}</a>
-                </li>
-                {{-- Roles --}}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('roles') }}">{{ __('Ruoli') }}</a>
-                </li>
-                {{-- System Info --}}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('info') }}">{{ __('Sys Info') }}</a>
-                </li>
+                
 
             </ul>
 
@@ -46,14 +35,10 @@
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                            {{ __('Logout') }}
-                        </a>
-
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            @csrf
-                        </form>
+                        @role('Super Admin')
+                        @include('partials.navbar.super-admin')
+                        @endrole
+                        @include('partials.navbar.logout-form')
                     </div>
                 </li>
                 @endguest

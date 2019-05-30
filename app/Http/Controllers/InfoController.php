@@ -8,6 +8,10 @@ use PDO;
 
 class InfoController extends Controller
 {
+    public function __construct() {
+        $this->middleware(['role:Super Admin']);
+    }
+    
     public function index() {
 
         $laravel              = app();
@@ -60,5 +64,9 @@ class InfoController extends Controller
         );
 
         return view('info', compact('infos'));
+    }
+
+    public function phpinfo() {
+        return view('phpinfo');
     }
 }

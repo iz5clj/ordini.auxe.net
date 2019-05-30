@@ -1,3 +1,4 @@
+{{-- User --}}
 @extends('layouts.main', [
     'viewMenu'  => true,
     'viewCard'  => true
@@ -21,7 +22,7 @@ Modifica Utente
 
     {{-- we modify a user --}}
     @else
-    <form action="{{ route('userStore', $user->id) }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('userUpdate', $user->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         @include('user._form')

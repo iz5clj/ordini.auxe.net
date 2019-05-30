@@ -20,13 +20,22 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/user/create', 'UserController@create')->name('userCreateForm');
     Route::post('/user/store', 'UserController@store')->name('userStore');
     Route::get('/user/{user}', 'UserController@modify')->name('userModify');
+    Route::put('/user/{user}', 'UserController@update')->name('userUpdate');
 
     Route::get('roles', 'RoleController@index')->name('roles');
     Route::get('/role/create', 'RoleController@create')->name('roleCreateForm');
     Route::post('/role/store', 'RoleController@store')->name('roleStore');
     Route::get('/role/{role}', 'RoleController@modify')->name('roleModify');
+    Route::put('/role/{role}', 'RoleController@update')->name('roleUpdate');
+
+    Route::get('permissions', 'PermissionController@index')->name('permissions');
+    Route::get('/permission/create', 'PermissionController@create')->name('permissionCreateForm');
+    Route::post('/permission/store', 'PermissionController@store')->name('permissionStore');
+    Route::get('/permission/{permission}', 'PermissionController@modify')->name('permissionModify');
+    Route::put('/permission/{permission}', 'PermissionController@update')->name('permissionUpdate');
 
     Route::get('info', 'InfoController@index')->name('info');
+    Route::get('phpinfo', 'InfoController@phpinfo')->name('phpinfo');
 
 });
 

@@ -7,6 +7,10 @@ use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
+    public function __construct() {
+        $this->middleware(['role:Super Admin']);
+    }
+    
     public function index() {
         $roles = Role::all();
         return view('role.index', compact('roles'));
@@ -46,8 +50,27 @@ class RoleController extends Controller
         ->with('success','Il ruolo è stato creato.');
     }
 
+    /**
+     * Show the form for editing an existing role
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function modify(Role $role)
+    {
+        return view('role.createModify')->with([
+            'role'     => $role,
+            'action'   => 'modify'
+        ]);
+    }
 
+    public function update(Request $request, Role $role)
+    {
+        $input = $request->all();
+        return $input;
 
-
+        return redirect()
+        ->route('roles')
+        ->with('success','Ruolo modificato corretamente.');
+    }
     
 }

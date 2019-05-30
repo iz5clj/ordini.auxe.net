@@ -1,21 +1,21 @@
-{{-- create or modify a role --}}
+{{-- create or modify a permission --}}
 
 @include('partials.errors-in-form')
 
 {{-- name --}}
 <div class="form-group row">
-    <label class="col-md-2 text-md-right label-form field-required " for="name">Ruolo</label>
+    <label class="col-md-2 text-md-right label-form field-required " for="name">Permesso</label>
     <div class="col-md-10">
         <input
             type="text"
             class="form-control @error('name') is-invalid @enderror"
             name="name"
-            value="{{ old('name') ? old('name') : $role->name }}"
+            value="{{ old('name') ? old('name') : $permission->name }}"
         >
         @if($errors->has('name'))
         <small class="form-text invalid-feedback">{{ $errors->first('name') }}</small>
         @else
-        <small class="form-text text-muted">Nomde del ruolo da creare</small>
+        <small class="form-text text-muted">Nomde del permesso da creare</small>
         @endif
     </div>
 </div>

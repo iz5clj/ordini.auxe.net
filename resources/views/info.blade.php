@@ -12,7 +12,13 @@ Informazioni sul Sistema
 <dl>
     @foreach( $infos as $info)
     <dt>{{ $info['title'] }}</dt>
-    <dd>{{ $info['value'] }}</dd>
+    <dd>
+        @if($info['title'] === 'PHP Version')
+        <a href="{{ route('phpinfo') }}">{{ $info['value'] }} phpinfo</a>
+        @else
+        {{ $info['value'] }}
+        @endif
+    </dd>
     @endforeach
 </dl>
 @endsection

@@ -6,26 +6,26 @@
 
 @section('card-header')
 @if( $action == 'create')
-Nuovo Ruolo
+Nuovo Permesso
 @else
-Modifica Ruolo
+Modifica Permesso
 @endif
 @endsection
 
 @section('content')
     {{-- We create a new role --}}
     @if( $action == 'create')
-    <form action="{{ route('roleStore') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('permissionStore') }}" method="POST" enctype="multipart/form-data">
         @csrf
-        @include('role._form')
+        @include('permission._form')
     </form>
 
-    {{-- we modify a role --}}
+    {{-- we modify a permission --}}
     @else
-    <form action="{{ route('roleUpdate', $role->id) }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('permissionUpdate', $permission->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
-        @include('role._form')
+        @include('permission._form')
     </form>
     @endif
 </div>

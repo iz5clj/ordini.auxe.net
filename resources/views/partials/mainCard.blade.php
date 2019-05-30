@@ -2,6 +2,11 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col">
+                @if (session('success'))
+                <div id="session-message" class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+                @endif
                 <div class="card">
                     <div class="card-header">
                         <h2>
