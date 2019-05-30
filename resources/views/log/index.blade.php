@@ -1,3 +1,5 @@
+{{-- Logs --}}
+
 @extends('layouts.main', [
     'viewMenu'  => true,
     'viewCard'  => true
@@ -8,7 +10,7 @@ Logs
 @endsection
 
 @section('content')
-<table class="table table-borderless table-sm">
+<table class="table table-borderless table-striped">
     <thead class="thead-dark">
         <tr>
             <th scope="col">ID</th>
@@ -20,20 +22,25 @@ Logs
     </thead>
     <tbody>
         @forelse ($logs as $log)
-        <thead>
-            <tr class="table-info">
-                <td>{{ $log->id }}</td>
-                <td>{{ $log->description }}</td>
-                <td>{{ $log->subject_type }}</td>
-                <td>{{ $log->subject }}</td>
-                <td>{{ Carbon\Carbon::parse($log->created_at)->format('d/m/Y H:i') }}</td>
-            </tr>
-        </thead>
+        <tr>
+            <td>{{ $log->id }}</td>
+            <td>{{ $log->description }}</td>
+            <td>{{ $log->subject_type }}</td>
+            <td>{{ $log->subject }}</td>
+            <td>{{ Carbon\Carbon::parse($log->created_at)->format('d/m/Y H:i') }}</td>
+        </tr>
         @empty
         <tr>
-            <td colspan="3"><h3>Il file dei log è vuoto.</h3></td>
+            <td colspan="5"><h3>Il file dei log è vuoto.</h3></td>
         </tr>
         @endforelse
     </tbody>
 </table>
+
+<div class="d-flex">
+    <div class="mx-auto justify-content-center">
+        {{ $logs->links() }}
+    </div>
+</div>
+
 @endsection

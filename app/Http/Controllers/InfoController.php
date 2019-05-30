@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+use Spatie\Activitylog\Models\Activity;
 use DB;
 use PDO;
 
@@ -60,6 +64,22 @@ class InfoController extends Controller
             array(
                 "title" => $myDriver,
                 "value" => $myVersion
+            ),
+            array(
+                "title" => "Utenti",
+                "value" => User::count()
+            ),
+            array(
+                "title" => "Ruoli",
+                "value" => Role::count()
+            ),
+            array(
+                "title" => "Permessi",
+                "value" => Permission::count()
+            ),
+            array(
+                "title" => "Entrate nei Logs",
+                "value" => Activity::count()
             )
         );
 

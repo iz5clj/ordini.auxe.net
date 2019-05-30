@@ -31,7 +31,7 @@
                     <input 
                     type="checkbox" 
                     class="custom-control-input" 
-                    id="permission-{{ $permission->name }}""
+                    id="permission-{{ $permission->name }}"
                     name="permission[]"
                     value="{{ $permission->id }}"
                     @if($action == 'modify')

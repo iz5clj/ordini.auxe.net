@@ -13,7 +13,7 @@ class LogController extends Controller
     
     public function index() {
 
-        $logs = Activity::all();
+        $logs = Activity::paginate(5);
 
         return view('log.index')->with([
             'logs' => $logs,
