@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+use DB;
 
 class RoleController extends Controller
 {
@@ -24,10 +26,12 @@ class RoleController extends Controller
     public function create()
     {
         $role = new Role;
+        $permissions = Permission::all();
         
         return view('role.createModify')->with([
-            'role'   => $role,
-            'action' => 'create'
+            'role'        => $role,
+            'permissions' => $permissions,
+            'action'      => 'create'
         ]);
     }
 
@@ -43,7 +47,8 @@ class RoleController extends Controller
             'name'     => 'required'
         ]);
 
-        Role::create(['name' => $request->input('name')]);
+        $role = Role::create(['name' => $request->input('name')]);
+        $role->syncPermissions($request->input('permission'));
 
         return redirect()
         ->route('roles')
@@ -57,20 +62,45 @@ class RoleController extends Controller
      */
     public function modify(Role $role)
     {
+        $permissions = Permission::all();
+
+        $rolePermissions = DB::table("role_has_permissions")
+        ->where("role_has_permissions.role_id",$role->id)
+        ->pluck('role_has_permissions.permission_id','role_has_permissions.permission_id')
+        ->all();
+
         return view('role.createModify')->with([
-            'role'     => $role,
-            'action'   => 'modify'
+            'role'            => $role,
+            'permissions'     => $permissions,
+            'rolePermissions' => $rolePermissions,
+            'action'          => 'modify'
         ]);
     }
 
     public function update(Request $request, Role $role)
     {
-        $input = $request->all();
-        return $input;
+        $this->validate($request, [
+            'name' => 'required'
+        ]);
+
+        $role->name = $request->input('name');
+        $role->save();
+
+        $role->syncPermissions($request->input('permission'));
 
         return redirect()
         ->route('roles')
         ->with('success','Ruolo modificato corretamente.');
+    }
+
+    public function destroy(Role $role)
+    {
+        $role->delete();
+
+        return redirect()
+        ->route('roles')
+        ->with('success','Ruolo eliminato.');
+
     }
     
 }

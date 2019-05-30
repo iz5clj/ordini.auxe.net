@@ -20,6 +20,35 @@
     </div>
 </div>
 
+{{-- Permissions --}}
+<div class="form-group row">
+    <label class="col-md-2 text-md-right label-form" for="name">Permessi</label>
+    <div class="col-md-10">
+        <div class="row">
+            @foreach($permissions as $permission)
+            <div class="col-sm-6 col-md-4">
+                <div class="custom-control custom-checkbox">
+                    <input 
+                    type="checkbox" 
+                    class="custom-control-input" 
+                    id="permission-{{ $permission->name }}""
+                    name="permission[]"
+                    value="{{ $permission->id }}"
+                    @if($action == 'modify')
+                    {{ in_array($permission->id, $rolePermissions) ? "checked" : false }}
+                    @endif
+                    >
+                    <label class="custom-control-label" for="permission-{{ $permission->name }}">
+                        {{ $permission->name }}
+                    </label>
+                </div>
+            </div>
+            @endforeach
+        </div>
+        <small class="form-text text-muted">Scegliere i permessi per questo ruolo.</small>
+    </div>
+</div>
+
 {{--  Button to submit  --}}
 <div class="form-group row">
     <div class="col-md-10 offset-md-2 offset-lg-2">

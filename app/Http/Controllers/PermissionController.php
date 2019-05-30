@@ -79,4 +79,16 @@ class PermissionController extends Controller
         ->route('permissions')
         ->with('success','Permesso modificato corretamente.');
     }
+
+    public function destroy(Permission $permission)
+    {
+        $permission->delete();
+
+        return redirect()
+        ->route('permissions')
+        ->with('success','Permesso eliminato.');
+
+    }
+
+
 }
