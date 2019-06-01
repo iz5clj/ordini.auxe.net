@@ -38,10 +38,15 @@ Route::middleware(['auth'])->group(function(){
     Route::put('/permission/{permission}', 'PermissionController@update')->name('permissionUpdate');
     Route::delete('/permission/{permission}', 'PermissionController@destroy')->name('permissionDestroy');
 
+    Route::resource('agente', 'AgenteController');
+
     Route::get('logs', 'LogController@index')->name('logs');
 
     Route::get('info', 'InfoController@index')->name('info');
     Route::get('phpinfo', 'InfoController@phpinfo')->name('phpinfo');
+
+    Route::get('profile', 'UserController@profile')->name('profile.show');
+    Route::put('profile({user}', 'UserController@profileUpdate')->name('profile.update');
 
 });
 

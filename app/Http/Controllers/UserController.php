@@ -6,11 +6,12 @@ use Illuminate\Http\Request;
 use App\User;
 use Spatie\Permission\Models\Role;
 use Hash;
+use Image;
 
 class UserController extends Controller
 {
     public function __construct() {
-        $this->middleware(['role:Super Admin']);
+        $this->middleware(['role:Super Admin'])->except(['profile', 'profileUpdate']);
     }
     
     public function index() {
@@ -56,13 +57,28 @@ class UserController extends Controller
             'role'     => 'required'
         ]);
 
-        $input = $request->all();
-        $input['password'] = Hash::make($input['password']);
+        if($request->hasFile('avatar')){
+            $avatar = $request->file('avatar');
+            $name = str_replace(' ', '', $request->input('name'));
+    		$filename = $name . time() . '.' . $avatar->getClientOriginalExtension();
+            Image::make($avatar)
+            ->resize(300, null, function ($constraint) {
+                $constraint->aspectRatio();
+            })
+            ->save( public_path('/uploads/avatar/' . $filename ) );
+        } else {
+            $filename = "default.jpg";
+        }
 
+        $user           = new User;
+        $user->name     = $request->input('name');
+        $user->email    = $request->input('email');
+        $user->password = Hash::make($request->input('password'));
+        $user->avatar   = $filename;
 
-        $user = User::create($input);
+        $user->save();
+
         $user->assignRole($request->input('role'));
-
 
         return redirect()
         ->route('users')
@@ -89,22 +105,31 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
-        $input = $request->all();
-
-        if ($request->password) {
-            $this->validate($request, [
-                'password' => 'required|same:confirm-password'
-            ]);
-            $input['password'] = Hash::make($input['password']);
-        }
         $this->validate($request, [
             'name'     => 'required',
             'email'    => 'required|email|unique:users,email,'.$user->id,
             'role'     => 'required',
+            'password' => 'same:confirm-password',
         ]);
 
-        $user->name     = $input['name'];
-        $user->email    = $input['email'];
+        if($request->hasFile('avatar')){
+    		$avatar = $request->file('avatar');
+            $name = str_replace(' ', '', $request->input('name'));
+    		$filename = $name . time() . '.' . $avatar->getClientOriginalExtension();
+            Image::make($avatar)
+            ->resize(300, null, function ($constraint) {
+                $constraint->aspectRatio();
+            })
+            ->save( public_path('/uploads/avatar/' . $filename ) );
+            $user->avatar = $filename;
+        }
+
+        $user->name     = $request->input('name');
+        $user->email    = $request->input('email');
+        
+        if($request->filled('password')) {
+            $user->password = Hash::make($request->input('password'));
+        }
 
         $user->save();
 
@@ -124,5 +149,48 @@ class UserController extends Controller
         ->route('users')
         ->with('success','Utente eliminato.');
 
+    }
+
+    /*
+     * Show user profile form
+     */
+    public function profile()
+    {
+        $user = User::findOrFail(auth()->id());
+        return view('user.profile', compact('user'));
+
+    }
+
+    public function profileUpdate(Request $request, User $user)
+    {
+        $this->validate($request, [
+            'name'     => 'required',
+            'email'    => 'required|email|unique:users,email,'.$user->id,
+            'password' => 'same:confirm-password'
+        ]);
+
+        if($request->hasFile('avatar')){
+    		$avatar = $request->file('avatar');
+    		$filename = time() . '.' . $avatar->getClientOriginalExtension();
+            Image::make($avatar)
+            ->resize(300, null, function ($constraint) {
+                $constraint->aspectRatio();
+            })
+            ->save( public_path('/uploads/avatar/' . $filename ) );
+            $user->avatar = $filename;
+        }
+
+        $user->name     = $request->input('name');
+        $user->email    = $request->input('email');
+        
+        if($request->filled('password')) {
+            $user->password = Hash::make($request->input('password'));
+        }
+
+        $user->save();
+
+        return redirect()
+        ->route('home')
+        ->with('success','Dati del tuo profile modificati.');
     }
 }

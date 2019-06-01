@@ -13,6 +13,7 @@ Utenti
     <thead class="thead-dark">
         <tr>
             <th scope="col">ID</th>
+            <th scope="col"></th>
             <th scope="col">Nome Cognome</th>
             <th scope="col">Email</th>
             <th scope="col">Ruolo</th>
@@ -23,6 +24,7 @@ Utenti
         @forelse ($users as $user)
         <tr>
             <td>{{ $user->id }}</td>
+            <td><img src="/uploads/avatar/{{ $user->avatar }}" style="width:32px; height:32px; border-radius:50%"></td>
             <td><a href="{{ route('userModify', $user->id) }}">{{ $user->name }}</a></td>
             <td>{{ $user->email}}</td>
             <td>

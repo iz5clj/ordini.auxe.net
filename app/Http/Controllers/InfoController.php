@@ -18,15 +18,15 @@ class InfoController extends Controller
     
     public function index() {
 
-        $laravel              = app();
+        $laravel     = app();
         // To use it directly in a Blade template, just use {{ App::VERSION() }}
-        $php_version = PHP_MAJOR_VERSION . "." . PHP_MINOR_VERSION;
+        $php_version = PHP_MAJOR_VERSION . "." . PHP_MINOR_VERSION;  
 
         try {
-            $pdo = DB::connection()->getPdo();
-            $myDriver = $pdo->getAttribute(PDO::ATTR_DRIVER_NAME);
+            $pdo              = DB::connection()->getPdo();
+            $myDriver         = $pdo->getAttribute(PDO::ATTR_DRIVER_NAME);
             $fullMysqlVersion = explode('-', $pdo->getAttribute(PDO::ATTR_SERVER_VERSION));
-            $myVersion = $fullMysqlVersion[0];
+            $myVersion        = $fullMysqlVersion[0];
         } catch(\Exception $e) {
             $myDriver  = 'No SQL Connection';
             $myVersion = 'No Version';

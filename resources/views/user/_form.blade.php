@@ -93,6 +93,27 @@
     </div>
 </div>
 
+{{-- avatar photo --}}
+<div class="form-group row">
+    <label class="col-md-2 col-form-label text-md-right" for="role">Avatar</label>
+    <div class="col-md-10">
+        <img 
+        src="{{ ($action === 'create') ? "/uploads/avatar/default.jpg" : "/uploads/avatar/$user->avatar" }}" 
+        id="profile-img-tag" 
+        width="175px" />
+    </div>
+</div>
+
+{{-- avatar file upload --}}
+<div class="form-group row">
+    <div class="col-md-10 offset-md-2">
+        <div class="custom-file">
+            <input type="file" class="custom-file-input" id="customFile" name="avatar">
+            <label class="custom-file-label" for="customFile" data-browse="Archivi locali">Scegliere una foto</label>
+        </div>
+    </div>
+</div>
+    
 {{--  Button to submit  --}}
 <div class="form-group row">
     <div class="col-md-10 offset-md-2 offset-lg-2">
