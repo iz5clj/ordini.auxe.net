@@ -16,9 +16,9 @@ mix.scripts([
     'node_modules/bootstrap/dist/js/bootstrap.js', // this is the full version
     'node_modules/select2/dist/js/select2.full.js',
     'resources/js/custom.js'
-], 'public/js/scripts.js');
+], 'public/js/scripts.js').version();
 
-mix.sass('resources/sass/app.scss', 'public/css');
+mix.sass('resources/sass/app.scss', 'public/css').version();
 
 mix.browserSync('ordini.test');
 

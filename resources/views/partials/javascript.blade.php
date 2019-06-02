@@ -1,1 +1,1 @@
-<script src="{{ asset('js/scripts.js') }}" defer></script>
+<script src="{{ mix('js/scripts.js') }}" defer></script>

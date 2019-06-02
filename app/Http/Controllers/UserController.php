@@ -61,11 +61,7 @@ class UserController extends Controller
             $avatar = $request->file('avatar');
             $name = str_replace(' ', '', $request->input('name'));
     		$filename = $name . time() . '.' . $avatar->getClientOriginalExtension();
-            Image::make($avatar)
-            ->resize(300, null, function ($constraint) {
-                $constraint->aspectRatio();
-            })
-            ->save( public_path('/uploads/avatar/' . $filename ) );
+            Image::make($avatar)->fit(200)->save( public_path('/uploads/avatar/' . $filename ) );
         } else {
             $filename = "default.jpg";
         }
@@ -116,11 +112,7 @@ class UserController extends Controller
     		$avatar = $request->file('avatar');
             $name = str_replace(' ', '', $request->input('name'));
     		$filename = $name . time() . '.' . $avatar->getClientOriginalExtension();
-            Image::make($avatar)
-            ->resize(300, null, function ($constraint) {
-                $constraint->aspectRatio();
-            })
-            ->save( public_path('/uploads/avatar/' . $filename ) );
+            Image::make($avatar)->fit(200)->save( public_path('/uploads/avatar/' . $filename ) );
             $user->avatar = $filename;
         }
 
@@ -172,11 +164,7 @@ class UserController extends Controller
         if($request->hasFile('avatar')){
     		$avatar = $request->file('avatar');
     		$filename = time() . '.' . $avatar->getClientOriginalExtension();
-            Image::make($avatar)
-            ->resize(300, null, function ($constraint) {
-                $constraint->aspectRatio();
-            })
-            ->save( public_path('/uploads/avatar/' . $filename ) );
+            Image::make($avatar)->fit(200)->save( public_path('/uploads/avatar/' . $filename ) );
             $user->avatar = $filename;
         }
 
@@ -194,3 +182,4 @@ class UserController extends Controller
         ->with('success','Dati del tuo profile modificati.');
     }
 }
+

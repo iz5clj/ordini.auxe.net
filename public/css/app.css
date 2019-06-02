@@ -11339,3 +11339,11 @@ dt:after {
   color: #ff0000;
 }
 
+.avatar {
+  max-height: 32px;
+  max-width: 32px;
+  width: auto;
+  height: auto;
+  border-radius: 50%;
+}
+

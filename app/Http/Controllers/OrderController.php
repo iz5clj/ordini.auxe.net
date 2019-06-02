@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Agente;
+use App\Order;
 use Illuminate\Http\Request;
 
-class AgenteController extends Controller
+class OrderController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class AgenteController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Agente  $agente
+     * @param  \App\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function show(Agente $agente)
+    public function show(Order $order)
     {
         //
     }
@@ -52,10 +52,10 @@ class AgenteController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Agente  $agente
+     * @param  \App\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function edit(Agente $agente)
+    public function edit(Order $order)
     {
         //
     }
@@ -64,10 +64,10 @@ class AgenteController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Agente  $agente
+     * @param  \App\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Agente $agente)
+    public function update(Request $request, Order $order)
     {
         //
     }
@@ -75,10 +75,10 @@ class AgenteController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Agente  $agente
+     * @param  \App\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Agente $agente)
+    public function destroy(Order $order)
     {
         //
     }

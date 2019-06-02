@@ -24,7 +24,7 @@ Utenti
         @forelse ($users as $user)
         <tr>
             <td>{{ $user->id }}</td>
-            <td><img src="/uploads/avatar/{{ $user->avatar }}" style="width:32px; height:32px; border-radius:50%"></td>
+            <td><img src="/uploads/avatar/{{ $user->avatar }}" class="avatar"</td>
             <td><a href="{{ route('userModify', $user->id) }}">{{ $user->name }}</a></td>
             <td>{{ $user->email}}</td>
             <td>

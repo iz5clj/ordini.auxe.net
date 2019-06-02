@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Agent;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreAgent;
 
 class AgentController extends Controller
 {
@@ -14,7 +15,11 @@ class AgentController extends Controller
      */
     public function index()
     {
-        //
+        $agents = Agent::all();
+
+        return view('agent.index')->with([
+            'agents' => $agents,
+        ]);
     }
 
     /**
@@ -24,7 +29,12 @@ class AgentController extends Controller
      */
     public function create()
     {
-        //
+        $agent = new Agent;
+        
+        return view('agent.createModify')->with([
+            'agent'  => $agent,
+            'action' => 'create',
+        ]);
     }
 
     /**
@@ -33,9 +43,19 @@ class AgentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreAgent $request)
     {
-        //
+        $agent          = new Agent;
+        $agent->nome    = $request->input('nome');
+        $agent->cognome = $request->input('cognome');
+        $agent->tel     = $request->input('tel');
+        $agent->email   = $request->input('email');
+        $agent->active  = $request->has('active') ? true : false;
+        $agent->save();
+
+        return redirect()
+        ->route('agents.index')
+        ->with('success','Agente creato corretamente.');
     }
 
     /**
@@ -46,7 +66,7 @@ class AgentController extends Controller
      */
     public function show(Agent $agent)
     {
-        //
+        return redirect()->route('agents.index');
     }
 
     /**
@@ -57,7 +77,10 @@ class AgentController extends Controller
      */
     public function edit(Agent $agent)
     {
-        //
+        return view('agent.createModify')->with([
+            'agent'  => $agent,
+            'action' => 'modify'
+        ]);
     }
 
     /**
@@ -67,9 +90,18 @@ class AgentController extends Controller
      * @param  \App\Agent  $agent
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Agent $agent)
+    public function update(StoreAgent $request, Agent $agent)
     {
-        //
+        $agent->nome    = $request->input('nome');
+        $agent->cognome = $request->input('cognome');
+        $agent->tel     = $request->input('tel');
+        $agent->email   = $request->input('email');
+        $agent->active  = $request->has('active') ? true : false;
+        $agent->save();
+
+        return redirect()
+        ->route('agents.index')
+        ->with('success','Agente modificato corretamente.');
     }
 
     /**
@@ -80,6 +112,10 @@ class AgentController extends Controller
      */
     public function destroy(Agent $agent)
     {
-        //
+        $agent->delete();
+
+        return redirect()
+        ->route('agents.index')
+        ->with('success','Agente eliminato.');
     }
 }

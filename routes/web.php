@@ -38,7 +38,10 @@ Route::middleware(['auth'])->group(function(){
     Route::put('/permission/{permission}', 'PermissionController@update')->name('permissionUpdate');
     Route::delete('/permission/{permission}', 'PermissionController@destroy')->name('permissionDestroy');
 
-    Route::resource('agente', 'AgenteController');
+    Route::resource('agents', 'AgentController');
+    Route::resource('articles', 'ArticleController');
+    Route::resource('suppliers', 'SupplierController');
+    Route::resource('orders', 'OrderController');
 
     Route::get('logs', 'LogController@index')->name('logs');
 
