@@ -58,6 +58,20 @@
     </div>
 </div>
 
+{{-- second email --}}
+<div class="form-group row">
+    <label class="col-md-2 label-form text-md-right" for="email2">Seconda Email</label>
+    <div class="col-md-10">
+        <input type="text" class="form-control @error('email2') is-invalid @enderror" name="email2"
+            value="{{ old('email2') ? old('email2') : $agent->email2 }}">
+        @if($errors->has('email2'))
+        <small class="form-text invalid-feedback">{{ $errors->first('email2') }}</small>
+        @else
+        <small class="form-text text-muted">L'ordine sarà inviato anche a questa email se esiste.</small>
+        @endif
+    </div>
+</div>
+
 {{-- active --}}
 <div class="form-group row">
     <div class="col-md-10 offset-md-2">

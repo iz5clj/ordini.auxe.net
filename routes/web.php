@@ -1,6 +1,9 @@
 <?php
 use App\Http\Controllers\UserController;
 
+use Illuminate\Support\Facades\Mail;
+use App\Mail\TestMail;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -42,6 +45,14 @@ Route::middleware(['auth'])->group(function(){
     Route::resource('articles', 'ArticleController');
     Route::resource('suppliers', 'SupplierController');
     Route::resource('orders', 'OrderController');
+
+    Route::get('sendemail', function(){
+        
+        Mail::to('ms@auxe.net')->send(new TestMail());
+
+        return redirect(route('home'));
+
+    })->name('test.sendmail');
 
     Route::get('logs', 'LogController@index')->name('logs');
 

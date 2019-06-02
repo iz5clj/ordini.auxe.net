@@ -7,6 +7,11 @@
                     {{ session('success') }}
                 </div>
                 @endif
+                @if (session('warning'))
+                <div id="session-message" class="alert alert-warning">
+                    {{ session('warning') }}
+                </div>
+                @endif
                 <div class="card">
                     <div class="card-header">
                         <h2>

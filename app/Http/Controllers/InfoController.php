@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Supplier;
+use App\Agent;
+use App\Order;
+use App\Article;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Spatie\Activitylog\Models\Activity;
@@ -76,6 +80,22 @@ class InfoController extends Controller
             array(
                 "title" => "Permessi",
                 "value" => Permission::count()
+            ),
+            array(
+                "title" => "fornitori",
+                "value" => Supplier::count()
+            ),
+            array(
+                "title" => "Agenti",
+                "value" => Agent::count()
+            ),
+            array(
+                "title" => "Ordini",
+                "value" => Order::count()
+            ),
+            array(
+                "title" => "Articoli",
+                "value" => Article::count()
             ),
             array(
                 "title" => "Entrate nei Logs",

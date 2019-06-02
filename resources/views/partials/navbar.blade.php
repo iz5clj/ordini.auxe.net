@@ -23,6 +23,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('suppliers.index') }}">{{ __('Fornitori') }}</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('test.sendmail') }}">{{ __('Invia email(test)') }}</a>
+                </li>
             </ul>
 
             <!-- Right Side Of Navbar -->

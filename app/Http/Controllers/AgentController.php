@@ -50,6 +50,7 @@ class AgentController extends Controller
         $agent->cognome = $request->input('cognome');
         $agent->tel     = $request->input('tel');
         $agent->email   = $request->input('email');
+        $agent->email2  = $request->input('email2');
         $agent->active  = $request->has('active') ? true : false;
         $agent->save();
 
@@ -96,6 +97,7 @@ class AgentController extends Controller
         $agent->cognome = $request->input('cognome');
         $agent->tel     = $request->input('tel');
         $agent->email   = $request->input('email');
+        $agent->email2  = $request->input('email2');
         $agent->active  = $request->has('active') ? true : false;
         $agent->save();
 
