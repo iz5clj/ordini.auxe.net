@@ -20,8 +20,7 @@ class CreateAgentsTable extends Migration
             $table->string('tel');
             $table->string('email');
 			$table->string('email2')->nullable();
-            $table->boolean('active');
-            $table->unsignedBigInteger('supplier_id')->nullable();
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }

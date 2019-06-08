@@ -15,8 +15,14 @@ class CreateArticlesTable extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('ref');
-            $table->string('descrizione');
+            $table->string('ref')->nullable();
+            $table->string('nome');
+            $table->integer('quantitaximballo')->nullable();
+            $table->integer('quantitaminima')->nullable();
+            $table->integer('prezzo')->nullable();
+            $table->string('descrizione')->nullable();
+			$table->string('foto')->default('default.png');
+			$table->boolean('active')->default(true);
             $table->bigInteger('supplier_id');
             $table->timestamps();
         });

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Article;
+use App\Supplier;
 use Illuminate\Http\Request;
 
 class ArticleController extends Controller
@@ -14,7 +15,11 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        //
+        $articles = Article::with('supplier')->get();
+
+        return view('article.index')->with([
+            'articles' => $articles,
+        ]);
     }
 
     /**
@@ -24,7 +29,19 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        //
+        // check if any supplier exists, if not return to suppliers list
+        if (!Supplier::count()) {
+            return redirect()
+            ->route('suppliers.index')
+            ->with('warning','Devi inserire almeno un fornitore prima di creare un articolo.');
+        }
+
+        $article  = new Article;
+
+        return view('article.createModify')->with([
+            'article' => $article,
+            'action'  => 'create',
+        ]);
     }
 
     /**

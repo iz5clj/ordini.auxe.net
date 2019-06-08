@@ -15,7 +15,7 @@ class AgentController extends Controller
      */
     public function index()
     {
-        $agents = Agent::all();
+        $agents = Agent::with('supplier')->get();
 
         return view('agent.index')->with([
             'agents' => $agents,

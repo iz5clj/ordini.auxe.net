@@ -16,6 +16,7 @@ Agenti
         <tr>
             <th scope="col">ID</th>
             <th scope="col">Nome Cognome</th>
+            <th scope="col">Fornitore</th>
             <th scope="col">Email</th>
             <th scope="col">Telefono</th>
             <th scope="col">Azione</th>
@@ -25,7 +26,8 @@ Agenti
         @forelse ($agents as $agent)
         <tr>
             <td>{{ $agent->id }}</td>
-            <td><a href="{{ route('agents.edit', $agent->id) }}">{{ $agent->nome . " " . $agent->cognome }}</a></td>
+            <td><a href="{{ route('agents.edit', $agent->id) }}">{{ $agent->fullname }}</a></td>
+            <td>{{ $agent->supplier->nome  ?? '' }}</td>
             <td>{{ $agent->email}}</td>
             <td>{{ $agent->tel }}</td>
             <td>
@@ -38,7 +40,7 @@ Agenti
         </tr>
         @empty
         <tr>
-            <td colspan="5"><h3>Non ci sono agenti.</h3></td>
+            <td colspan="6"><h3>Non ci sono agenti.</h3></td>
         </tr>
         @endforelse
     </tbody>

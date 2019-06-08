@@ -37,4 +37,9 @@ class Agent extends Model
         return "{$this->nome} {$this->cognome}";
     }
 
+    public function supplier()
+    {
+        return $this->hasOne('App\Supplier');
+    }
+
 }

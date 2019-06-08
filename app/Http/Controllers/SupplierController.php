@@ -18,7 +18,7 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        $suppliers = Supplier::all();
+        $suppliers = Supplier::with('agent')->get();
 
         return view('supplier.index')->with([
             'suppliers' => $suppliers,
@@ -42,12 +42,14 @@ class SupplierController extends Controller
         $supplier  = new Supplier;
         $countries = Countries::getList('it', 'php');
         $agents    = Agent::all()->pluck('fullname', 'id')->toArray();
+        $actualAgent = 0;
 
         return view('supplier.createModify')->with([
-            'supplier'  => $supplier,
-            'countries' => $countries,
-            'agents'    => $agents,
-            'action'    => 'create',
+            'supplier'    => $supplier,
+            'countries'   => $countries,
+            'agents'      => $agents,
+            'actualAgent' => $actualAgent,
+            'action'      => 'create',
         ]);
     }
 

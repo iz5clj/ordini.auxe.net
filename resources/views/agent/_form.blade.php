@@ -53,7 +53,7 @@
         @if($errors->has('email'))
         <small class="form-text invalid-feedback">{{ $errors->first('email') }}</small>
         @else
-        <small class="form-text text-muted">Email dell'agente</small>
+        <small class="form-text text-muted">Email dell'agente. L'ordine sarà inviato a questo indirizzo.</small>
         @endif
     </div>
 </div>
@@ -67,7 +67,7 @@
         @if($errors->has('email2'))
         <small class="form-text invalid-feedback">{{ $errors->first('email2') }}</small>
         @else
-        <small class="form-text text-muted">L'ordine sarà inviato anche a questa email se esiste.</small>
+        <small class="form-text text-muted">L'ordine sarà inviato anche a questa email (cc) se esiste.</small>
         @endif
     </div>
 </div>
@@ -86,6 +86,7 @@
             @endif
             >
             <label class="custom-control-label" for="active">Attivo(Si / No)</label>
+            <small class="form-text text-muted">Per ora non usato.</small>
         </div>
     </div>
 </div>
