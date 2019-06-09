@@ -6,6 +6,7 @@ use App\Supplier;
 use Illuminate\Http\Request;
 use Countries;
 use App\Http\Requests\StoreSupplier;
+use Illuminate\Support\Str;
 use App\Agent;
 use Image;
 
@@ -63,7 +64,7 @@ class SupplierController extends Controller
     {
         if($request->hasFile('logo')){
             $logo = $request->file('logo');
-            $name = str_replace(' ', '', $request->input('nome'));
+            $name = Str::camel($request->input('nome'));
             $filename = $name . time() . '.' . $logo->getClientOriginalExtension();
             Image::make($logo)->fit(200)->save( public_path('/uploads/logo/' . $filename ) );
         } else {
@@ -132,7 +133,7 @@ class SupplierController extends Controller
     {
         if($request->hasFile('logo')){
             $logo     = $request->file('logo');
-            $name     = str_replace(' ', '', $request->input('nome'));
+            $name     = Str::camel($request->input('nome'));
             $filename = $name . time() . '.' . $logo->getClientOriginalExtension();
 
             Image::make($logo)->fit(200)->save( public_path('/uploads/logo/' . $filename ) );

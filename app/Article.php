@@ -10,5 +10,15 @@ class Article extends Model
     {
         return $this->belongsTo('App\Supplier');
     }
+
+    public function setPrezzoAttribute($value)
+    {
+        $this->attributes['prezzo'] = $value * 100;
+    }
+
+    public function getPrezzoAttribute($value)
+    {
+        return number_format( $value / 100, 2, ",", ".");
+    }
     
 }

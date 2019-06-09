@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Article;
 use App\Supplier;
+use App\Http\Requests\StoreArticle;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Image;
 
 class ArticleController extends Controller
 {
@@ -36,11 +39,15 @@ class ArticleController extends Controller
             ->with('warning','Devi inserire almeno un fornitore prima di creare un articolo.');
         }
 
-        $article  = new Article;
+        $article        = new Article;
+        $suppliers      = Supplier::all()->pluck('nome', 'id')->toArray();
+        $actualSupplier = 0;
 
         return view('article.createModify')->with([
-            'article' => $article,
-            'action'  => 'create',
+            'article'        => $article,
+            'suppliers'      => $suppliers,
+            'actualSupplier' => $actualSupplier,
+            'action'         => 'create',
         ]);
     }
 
@@ -50,9 +57,34 @@ class ArticleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreArticle $request)
     {
-        //
+        if($request->hasFile('foto')){
+            $foto = $request->file('foto');
+            $name = Str::camel($request->input('nome'));
+            $filename = $name . time() . '.' . $foto->getClientOriginalExtension();
+            Image::make($foto)->fit(200)->save( public_path('/uploads/foto/' . $filename ) );
+        } else {
+            $filename = "default.png";
+        }
+
+        $article = new Article;
+
+        $article->ref              = $request->input('ref');
+        $article->nome             = $request->input('nome');
+        $article->descrizione      = $request->input('descrizione');
+        $article->supplier_id      = $request->input('supplier_id');
+        $article->prezzo           = $request->input('prezzo');
+        $article->active           = $request->has('active') ? true : false;
+        $article->quantitaminima   = $request->input('quantitaminima');
+        $article->quantitaximballo = $request->input('quantitaximballo');
+        $article->foto             = $filename;
+
+        $article->save();
+
+        return redirect()
+        ->route('articles.index')
+        ->with('success','Articolo creato corretamente.');
     }
 
     /**
@@ -97,6 +129,12 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
-        //
+        $nome = $article->nome;
+
+        $article->delete();
+
+        return redirect()
+        ->route('articles.index')
+        ->with('success', $nome . ': articolo eliminato.');
     }
 }

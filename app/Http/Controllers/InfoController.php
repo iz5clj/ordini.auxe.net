@@ -36,6 +36,15 @@ class InfoController extends Controller
             $myVersion = 'No Version';
         }
 
+        $list = "";
+        // $tables = DB::select("select * from sqlite_master WHERE type='table'");
+        $tables = DB::table('sqlite_master')->get()->toArray();
+        $total = DB::table('sqlite_master')->count();
+        // $names = array_column( $tables, 'tbl_name');
+        foreach($tables as $table) {
+            $list .= $table->tbl_name . ', ' . PHP_EOL;
+        }
+
         $infos = array(
             array(
                 "title" => "Laravel Version",
@@ -100,6 +109,10 @@ class InfoController extends Controller
             array(
                 "title" => "Entrate nei Logs",
                 "value" => Activity::count()
+            ),
+            array(
+                "title" => "All tables (" . $total . ")",
+                "value" => $list
             )
         );
 

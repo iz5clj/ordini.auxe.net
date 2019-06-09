@@ -16,14 +16,14 @@ Modifica Articolo
 @section('content')
     {{-- We create a new article --}}
     @if( $action == 'create')
-    <form action="{{ route('articles.store') }}" method="POST">
+    <form action="{{ route('articles.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         @include('article._form')
     </form>
 
     {{-- we modify a article --}}
     @else
-    <form action="{{ route('articles.update', $article->id) }}" method="POST">
+    <form action="{{ route('articles.update', $article->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         @include('article._form')

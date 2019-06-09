@@ -14,7 +14,6 @@ Articoli
 <table class="table table-borderless table-striped">
     <thead class="thead-dark">
         <tr>
-            <th scope="col">ID</th>
             <th scope="col"></th>
             <th scope="col">Nome</th>
             <th scope="col">Fornitore</th>
@@ -26,11 +25,10 @@ Articoli
     <tbody>
         @forelse ($articles as $article)
         <tr>
-            <td>{{ $article->id }}</td>
             <td><img src="/uploads/foto/{{ $article->foto }}" class="avatar"</td>
             <td><a href="{{ route('articles.edit', $article->id) }}">{{ $article->nome }}</a></td>
             <td>{{ $article->supplier->nome  ?? '' }}</td>
-            <td>{{ $article->prezzo}}</td>
+            <td align="right">{{ $article->prezzo}}</td>
             <td>{{ $article->descrizione }}</td>
             <td>
                 <form action="{{ route('articles.destroy', $article->id) }}" method="post">
@@ -42,7 +40,7 @@ Articoli
         </tr>
         @empty
         <tr>
-            <td colspan="7"><h3>Non ci sono articoli.</h3></td>
+            <td colspan="6"><h3>Non ci sono articoli.</h3></td>
         </tr>
         @endforelse
     </tbody>

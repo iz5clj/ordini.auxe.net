@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
 use Hash;
 use Image;
@@ -59,7 +60,7 @@ class UserController extends Controller
 
         if($request->hasFile('avatar')){
             $avatar = $request->file('avatar');
-            $name = str_replace(' ', '', $request->input('name'));
+            $name = Str::camel($request->input('name'));
     		$filename = $name . time() . '.' . $avatar->getClientOriginalExtension();
             Image::make($avatar)->fit(200)->save( public_path('/uploads/avatar/' . $filename ) );
         } else {
@@ -110,7 +111,7 @@ class UserController extends Controller
 
         if($request->hasFile('avatar')){
     		$avatar = $request->file('avatar');
-            $name = str_replace(' ', '', $request->input('name'));
+            $name = Str::camel($request->input('name'));
     		$filename = $name . time() . '.' . $avatar->getClientOriginalExtension();
             Image::make($avatar)->fit(200)->save( public_path('/uploads/avatar/' . $filename ) );
             $user->avatar = $filename;
