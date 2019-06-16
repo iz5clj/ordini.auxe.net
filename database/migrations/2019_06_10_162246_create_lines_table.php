@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateOrdersTable extends Migration
+class CreateLinesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,15 @@ class CreateOrdersTable extends Migration
      */
     public function up()
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('lines', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('user_id');
-            $table->dateTime('creato_il');
-            $table->dateTime('confermato_il')->nullable();
-            $table->dateTime('inviato_il')->nullable();
-            $table->integer('stato')->default(1); // CREATO = 1, CONFERMATO = 2, INVIATO    = 3
+            $table->bigInteger('order_id');
+            $table->bigInteger('article_id');
+            $table->integer('quantita');
+            $table->integer('stato');
             $table->timestamps();
+
+            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
         });
     }
 
@@ -31,7 +32,6 @@ class CreateOrdersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists('lines');
     }
 }
-

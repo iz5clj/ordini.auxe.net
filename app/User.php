@@ -40,4 +40,9 @@ class User extends Authenticatable
     ];
 
     protected static $logAttributes = ['name', 'email'];
+
+    public function order()
+    {
+        return $this->hasMany('App\Order');
+    }
 }

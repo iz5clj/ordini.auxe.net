@@ -28,7 +28,7 @@ Articoli
             <td><img src="/uploads/foto/{{ $article->foto }}" class="avatar"</td>
             <td><a href="{{ route('articles.edit', $article->id) }}">{{ $article->nome }}</a></td>
             <td>{{ $article->supplier->nome  ?? '' }}</td>
-            <td align="right">{{ $article->prezzo}}</td>
+            <td align="right">{{ number_format( $article->prezzo, 2, ",", ".") }}</td>
             <td>{{ $article->descrizione }}</td>
             <td>
                 <form action="{{ route('articles.destroy', $article->id) }}" method="post">

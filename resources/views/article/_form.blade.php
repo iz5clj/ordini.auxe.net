@@ -71,7 +71,8 @@
     <div class="col-md-10">
         <input 
             type="number"
-            step="0.01"
+            step="any"
+            min="0"
             class="form-control @error('descrizione') is-invalid @enderror" 
             name="prezzo"
             value="{{ old('prezzo') ? old('prezzo') : $article->prezzo }}"
@@ -123,8 +124,6 @@
     </div>
 </div>
         
-    
-
 {{-- supplier --}}
 <div class="form-group row">
     <label class="col-md-2 col-form-label field-required text-md-right" for="role">Fornitore</label>

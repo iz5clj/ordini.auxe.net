@@ -3,6 +3,10 @@ use App\Http\Controllers\UserController;
 
 use Illuminate\Support\Facades\Mail;
 use App\Mail\TestMail;
+use Illuminate\Support\Facades\URL;
+use App\Order;
+use App\Line;
+use App\Supplier;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,14 +45,17 @@ Route::middleware(['auth'])->group(function(){
     Route::put('/permission/{permission}', 'PermissionController@update')->name('permissionUpdate');
     Route::delete('/permission/{permission}', 'PermissionController@destroy')->name('permissionDestroy');
 
-    Route::resource('agents', 'AgentController');
-    Route::resource('articles', 'ArticleController');
-    Route::resource('suppliers', 'SupplierController');
-    Route::resource('orders', 'OrderController');
+    Route::resources([
+        'agents'    => 'AgentController',
+        'articles'  => 'ArticleController',
+        'suppliers' => 'SupplierController',
+        'orders'    => 'OrderController',
+        'lines'     => 'Linecontroller'
+    ]);
 
     Route::get('sendemail', function(){
         
-        Mail::to('ms@auxe.net')->send(new TestMail());
+        Mail::to('ms@auxe.net')->queue(new TestMail());
 
         return redirect(route('home'));
 
@@ -62,6 +69,48 @@ Route::middleware(['auth'])->group(function(){
     Route::get('profile', 'UserController@profile')->name('profile.show');
     Route::put('profile({user}', 'UserController@profileUpdate')->name('profile.update');
 
+    Route::get('/ajax/find', 'AjaxController@find');
+
 });
 
 Auth::routes();
+
+Route::get('conferma', 'OrderController@conferma')->name('conferma')->middleware('signed');
+
+Route::get('test1', function(){
+    $orders = Order::creato()->with('lines.article.supplier.agent')->get(); 
+    
+    $flat = $orders->flatten(4);
+    return $flat;
+
+    $grouped = $orders->groupBy([
+        'stato',
+        function ($item) {
+            return $item['lines'];
+        },
+    ], $preserveKeys = true);
+    return $grouped;
+
+    foreach ($orders as $order) {
+        foreach( $order->lines as $line) {
+            echo $line->article->nome . ' da ' . $line->article->supplier->nome . '<br>';
+        }
+    }
+});
+
+Route::get('test2', function(){
+
+    $lines = DB::table('lines')
+        ->join('articles', 'lines.article_id', '=', 'articles.id')
+        ->join('suppliers', 'articles.supplier_id', '=', 'suppliers.id')
+        ->join('agents', 'suppliers.agent_id', '=', 'agents.id')
+        ->join('orders', 'lines.order_id', '=', 'orders.id')
+        ->where('orders.stato', '=', 1)
+        ->orderBy('agents.id')
+        // ->groupBy('orders.id')
+        ->select('lines.id AS line', 'orders.id AS order', 'articles.nome', 'lines.quantita', 'agents.email')
+        ->get();
+
+    return $lines;
+
+});

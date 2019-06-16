@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Article;
 use App\Supplier;
 use App\Http\Requests\StoreArticle;
+use App\Jobs\TestQueue;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Image;
@@ -81,6 +82,7 @@ class ArticleController extends Controller
         $article->foto             = $filename;
 
         $article->save();
+        dispatch(new TestQueue);
 
         return redirect()
         ->route('articles.index')
@@ -95,7 +97,7 @@ class ArticleController extends Controller
      */
     public function show(Article $article)
     {
-        //
+        return redirect()->route('articles.index');
     }
 
     /**
@@ -106,7 +108,14 @@ class ArticleController extends Controller
      */
     public function edit(Article $article)
     {
-        //
+        $suppliers      = Supplier::all()->pluck('nome', 'id')->toArray();
+        $actualSupplier = $article->supplier_id;
+        return view('article.createModify')->with([
+            'article'        => $article,
+            'suppliers'      => $suppliers,
+            'actualSupplier' => $actualSupplier,
+            'action'         => 'modify'
+        ]);
     }
 
     /**
@@ -118,7 +127,30 @@ class ArticleController extends Controller
      */
     public function update(Request $request, Article $article)
     {
-        //
+        if($request->hasFile('foto')){
+            $foto     = $request->file('foto');
+            $name     = Str::camel($request->input('nome'));
+            $filename = $name . time() . '.' . $foto->getClientOriginalExtension();
+
+            Image::make($foto)->fit(200)->save( public_path('/uploads/foto/' . $filename ) );
+
+            $supplier->foto = $filename;
+        }
+
+        $article->ref              = $request->input('ref');
+        $article->nome             = $request->input('nome');
+        $article->descrizione      = $request->input('descrizione');
+        $article->supplier_id      = $request->input('supplier_id');
+        $article->prezzo           = $request->input('prezzo');
+        $article->active           = $request->has('active') ? true : false;
+        $article->quantitaminima   = $request->input('quantitaminima');
+        $article->quantitaximballo = $request->input('quantitaximballo');
+
+        $article->save();
+
+        return redirect()
+        ->route('articles.index')
+        ->with('success', $article->nome . ': articolo modificato corretamente.');
     }
 
     /**
@@ -137,4 +169,5 @@ class ArticleController extends Controller
         ->route('articles.index')
         ->with('success', $nome . ': articolo eliminato.');
     }
+
 }

@@ -11,6 +11,11 @@ class Article extends Model
         return $this->belongsTo('App\Supplier');
     }
 
+    public function line()
+    {
+        return $this->hasMany('App\Line');
+    }
+
     public function setPrezzoAttribute($value)
     {
         $this->attributes['prezzo'] = $value * 100;
@@ -18,7 +23,8 @@ class Article extends Model
 
     public function getPrezzoAttribute($value)
     {
-        return number_format( $value / 100, 2, ",", ".");
+        // return number_format( $value / 100, 2, ",", ".");
+        return $value / 100;
     }
     
 }
