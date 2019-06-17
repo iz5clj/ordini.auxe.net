@@ -105,12 +105,37 @@ Route::get('test2', function(){
         ->join('suppliers', 'articles.supplier_id', '=', 'suppliers.id')
         ->join('agents', 'suppliers.agent_id', '=', 'agents.id')
         ->join('orders', 'lines.order_id', '=', 'orders.id')
-        ->where('orders.stato', '=', 1)
-        ->orderBy('agents.id')
-        // ->groupBy('orders.id')
+        ->where('lines.stato', '=', 1)
+        ->orderBy('suppliers.id')
+        ->groupBy('articles.id')
         ->select('lines.id AS line', 'orders.id AS order', 'articles.nome', 'lines.quantita', 'agents.email')
         ->get();
 
     return $lines;
+
+});
+
+Route::get('test3', function(){
+
+    $lines = Line::creata()->with('article.supplier.agent')->get(); 
+    $grouped = $lines->groupBy('agent', function($item) {
+        return $item['supplier'];
+    }, $preserveKeys = true);
+    return $grouped;
+
+});
+
+Route::get('test4', function(){
+
+    $articles = DB::table('articles')
+        ->join('lines', 'lines.article_id', '=', 'articles.id')
+        ->join('suppliers', 'articles.supplier_id', '=', 'suppliers.id')
+        ->where('lines.stato', '=', Line::CREATA)
+        ->orderBy('suppliers.id', 'desc')
+        ->groupBy('suppliers.id')
+        ->select('suppliers.nome AS fo_nome')
+        ->get();
+
+    return $articles;
 
 });

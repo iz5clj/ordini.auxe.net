@@ -25,4 +25,9 @@ class Line extends Model
     {
         return 1;
     }
+
+    public function scopeCreata($query)
+    {
+        return $query->where('stato', static::CREATA);
+    }
 }
